@@ -54,25 +54,6 @@ class ViewController: UIViewController, Navigatable, NVActivityIndicatorViewable
     let motionShakeEvent = PublishSubject<Void>()
     let deviceThemeEvent = PublishSubject<Void>()
 
-    lazy var searchBar: SearchBar = {
-        let view = SearchBar()
-        return view
-    }()
-
-    lazy var backBarButton: BarButtonItem = {
-        let view = BarButtonItem()
-        view.title = ""
-        return view
-    }()
-
-    lazy var closeBarButton: BarButtonItem = {
-        let view = BarButtonItem(image: UIImage(named: ""),
-                                 style: .plain,
-                                 target: self,
-                                 action: nil)
-        return view
-    }()
-
     lazy var contentView: ViewX = {
         let view = ViewX()
         //        view.hero.id = "CententView"
@@ -101,10 +82,6 @@ class ViewController: UIViewController, Navigatable, NVActivityIndicatorViewable
 //        hideKeyboardWhenTappedAround()
         makeUI()
         bindViewModel()
-
-        closeBarButton.rx.tap.asObservable().subscribe(onNext: { [weak self] () in
-//            self?.navigator.dismiss(sender: self)
-        }).disposed(by: rx.disposeBag)
 
         // Observe device orientation change
         NotificationCenter.default
@@ -155,7 +132,6 @@ class ViewController: UIViewController, Navigatable, NVActivityIndicatorViewable
     }
 
     func makeUI() {
-        navigationItem.backBarButtonItem = backBarButton
         updateUI()
     }
 
@@ -207,7 +183,7 @@ class ViewController: UIViewController, Navigatable, NVActivityIndicatorViewable
         if self.navigationController?.viewControllers.count ?? 0 > 1 { // Pushed
             self.navigationItem.leftBarButtonItem = nil
         } else if self.presentingViewController != nil { // presented
-            self.navigationItem.leftBarButtonItem = closeBarButton
+//            self.navigationItem.leftBarButtonItem = closeBarButton
         }
     }
 
