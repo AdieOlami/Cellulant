@@ -64,6 +64,8 @@ class UserListVC: TableViewController {
         output.items.asDriver(onErrorJustReturn: [])
             .drive(tableViewX.rx.items(cellIdentifier: reuseIdentifier, cellType: UserCell.self)) { tableView, viewModel, cell in
                 cell.textLabel?.text = "\(viewModel.response.firstName ?? "") \(viewModel.response.lastName ?? "")"
+                let url = URL(string: viewModel.response.avatar ?? "https://example.com/image.png")
+                cell.imageView?.kf.setImage(with: url)
                 cell.bind(to: viewModel)
             }.disposed(by: rx.disposeBag)
         
